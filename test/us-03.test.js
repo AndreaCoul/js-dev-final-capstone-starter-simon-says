@@ -39,6 +39,7 @@ describe("US-03: activatePad(color)", () => {
   });
 
   it("should call `pad.sound.play()`", async () => {
+    console.log("best instructor")
     const activatePad = await page.evaluate(() => {
       return window.activatePad.toString();
     });
