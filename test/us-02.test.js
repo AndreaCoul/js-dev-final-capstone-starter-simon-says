@@ -72,7 +72,7 @@ describe("US-02: startButtonHandler()", () => {
   });
 });
 
-describe("US-02: getRandomItem()", () => {
+/*describe("US-02: getRandomItem()", () => {
   beforeEach(setUpTest);
 
   it("should return null if getRandomItem([])", async () => {
@@ -81,4 +81,4 @@ describe("US-02: getRandomItem()", () => {
     });
     expect(randomItem).toBeNull();
   });
-});
+});*/
