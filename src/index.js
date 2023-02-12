@@ -113,9 +113,9 @@ function padHandler(event) {
   if (!color) return;
  
   // TODO: Write your code here.
-  //const pad = pads.find((pad) => pad.color === color);
-  //pad.sound.play();
-  //checkPress(color);
+  const pad = pads.find((pad) => pad.color === color);
+  pad.sound.play();
+  checkPress(color);
 
   return color;
 }
@@ -187,7 +187,7 @@ function getRandomItem(collection) {
 function setText(element, text) {
   // TODO: Write your code here.
   element.textContent = text;
-  return element; /* ====== why do I need to return? ==== */
+  return element; 
 }
 
 /**
@@ -262,8 +262,9 @@ function playComputerTurn() {
   // TODO: Write your code here.
   padContainer.classList.add("unclickable");
   setText(statusSpan, "The computer's turn...");
+  let maxRoundCount = setLevel();
   setText(heading, `Round ${roundCount} of ${maxRoundCount}`);
-  computerSequence.push(getRandomItem(pads.color));
+  computerSequence.push(getRandomItem(pads).color);
   activatePads(computerSequence);
   setTimeout(() => playHumanTurn(roundCount), roundCount * 600 + 1000); // 5
 }
