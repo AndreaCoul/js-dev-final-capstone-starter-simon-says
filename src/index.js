@@ -209,9 +209,8 @@ function activatePad(color) {
   let pad = pads.find((pad) => pad.color === color); //returns object where colors equal
   pad.selector.classList.add("activated");
   pad.sound.play();
-  setTimeout(() => {
-    pad.selector.classList.remove("activated");
-  }, 500);
+  setTimeout(() => 
+    pad.selector.classList.remove("activated"), 500);
 }
 
 /**
@@ -262,11 +261,12 @@ function playComputerTurn() {
   // TODO: Write your code here.
   padContainer.classList.add("unclickable");
   setText(statusSpan, "The computer's turn...");
-  let maxRoundCount = setLevel();
+  //let maxRoundCount = setLevel();
   setText(heading, `Round ${roundCount} of ${maxRoundCount}`);
   computerSequence.push(getRandomItem(pads).color);
   activatePads(computerSequence);
-  setTimeout(() => playHumanTurn(roundCount), roundCount * 600 + 1000); // 5
+  //setTimeout(() => playHumanTurn(roundCount), roundCount * 600 + 1000); // 5
+  playHumanTurn();
 }
 
 /**
@@ -281,6 +281,7 @@ function playHumanTurn() {
   padContainer.classList.remove("unclickable");
   setText(statusSpan, `You have ${((computerSequence.length) - (playerSequence.length))} presses left!` )
   console.log(playerSequence.length);
+
 }
 
 /**
@@ -308,20 +309,20 @@ function playHumanTurn() {
 function checkPress(color) {
   // TODO: Write your code here.
   playerSequence.push(color);
-  
-  for (let i = 0; i < playerSequence.length; i++){
+  let index = playerSequence.length;
+  /*for (let i = 0; i < playerSequence.length; i++){
     if (color === playerSequence[i]){
       index = i;
       //console.log(index);
     }
-  };
+  };*/
 
   let remainingPresses = computerSequence.length - playerSequence.length;
   setText(statusSpan, `${remainingPresses} presses remain`);
 
-  if (computerSequence[i] !==  playerSequence[i]){
-     resetGame();
-     setText(statusSpan, "Incorrect!");
+  if (computerSequence[index] !==  playerSequence[index]){
+     resetGame("Try Again!");
+     //setText(statusSpan, "Incorrect!");
      return;
   }
 
@@ -347,12 +348,12 @@ function checkPress(color) {
 
 function checkRound() {
   // TODO: Write your code here.
-  if(playerSequence.length = maxRoundCount){
-    resetGame();
-    setText(statusSpan, "You WIN!");
+  if(playerSequence.length === maxRoundCount){
+    resetGame("You WIN!!!");
+   // setText(statusSpan, "You WIN!");
   } else {
     roundCount = roundCount + 1
-    playerSequence = [];
+    //playerSequence = [];
     setTimeout(() => playComputerTurn(), 1000);
   }
 }
