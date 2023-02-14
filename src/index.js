@@ -148,7 +148,7 @@ function padHandler(event) {
 function setLevel(level = 1) {
   // TODO: Write your code here.
   if (level === 1) {
-    return 8;
+    return 3;
   } else if (level === 2) {
     return 14;
   } else if (level === 3) {
@@ -261,12 +261,12 @@ function playComputerTurn() {
   // TODO: Write your code here.
   padContainer.classList.add("unclickable");
   setText(statusSpan, "The computer's turn...");
-  //let maxRoundCount = setLevel();
+  let maxRoundCount = setLevel();
   setText(heading, `Round ${roundCount} of ${maxRoundCount}`);
   computerSequence.push(getRandomItem(pads).color);
   activatePads(computerSequence);
-  //setTimeout(() => playHumanTurn(roundCount), roundCount * 600 + 1000); // 5
-  playHumanTurn();
+  setTimeout(() => playHumanTurn(roundCount), roundCount * 600 + 1000); // 5
+  //playHumanTurn();
 }
 
 /**
@@ -279,7 +279,7 @@ function playComputerTurn() {
 function playHumanTurn() {
   // TODO: Write your code here.
   padContainer.classList.remove("unclickable");
-  setText(statusSpan, `You have ${((computerSequence.length) - (playerSequence.length))} presses left!` )
+  setText(statusSpan, `Player has ${((computerSequence.length) - (playerSequence.length))} presses left!` )
   console.log(playerSequence.length);
 
 }
@@ -308,14 +308,10 @@ function playHumanTurn() {
  */
 function checkPress(color) {
   // TODO: Write your code here.
+  console.log("checking checkPress")
   playerSequence.push(color);
-  let index = playerSequence.length;
-  /*for (let i = 0; i < playerSequence.length; i++){
-    if (color === playerSequence[i]){
-      index = i;
-      //console.log(index);
-    }
-  };*/
+  let index = playerSequence.length -1;
+  
 
   let remainingPresses = computerSequence.length - playerSequence.length;
   setText(statusSpan, `${remainingPresses} presses remain`);
@@ -328,6 +324,7 @@ function checkPress(color) {
 
   if (remainingPresses === 0){
     checkRound();
+    return;
   }
 }
 
@@ -348,12 +345,15 @@ function checkPress(color) {
 
 function checkRound() {
   // TODO: Write your code here.
+  
+  let maxRoundCount = setLevel()
+  console.log(`max round count = ${maxRoundCount}`)
   if(playerSequence.length === maxRoundCount){
     resetGame("You WIN!!!");
    // setText(statusSpan, "You WIN!");
   } else {
     roundCount = roundCount + 1
-    //playerSequence = [];
+    playerSequence = [];
     setTimeout(() => playComputerTurn(), 1000);
   }
 }
