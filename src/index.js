@@ -44,12 +44,12 @@ const pads = [
   {
     color: "green",
     selector: document.querySelector(".js-pad-green"),
-    sound: new Audio("../src/assets/simon-says-sound-2.mp3"),
+    sound: new Audio("../assets/simon-says-sound-2.mp3"),
   },
   {
     color: "yellow",
     selector: document.querySelector(".js-pad-yellow"),
-    sound: new Audio("../src/assets/simon-says-sound-4.mp3"),
+    sound: new Audio("../assets/simon-says-sound-4.mp3"),
   },
 ];
 
