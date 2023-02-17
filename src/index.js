@@ -32,21 +32,21 @@ let roundCount = 0; // track the number of rounds that have been played so far
  */
 
 const pads = [
-  {
+ /* {
     color: "red",
     selector: document.querySelector(".js-pad-red"),
     sound: new Audio("../assets/simon-says-sound-1.mp3")
   },
   // TODO: Add the objects for the green, blue, and yellow pads. Use object for the red pad above as an example.[done]
   {
-    color: "green",
-    selector: document.querySelector(".js-pad-green"),
-    sound: new Audio("../assets/simon-says-sound-2.mp3")
-  },
-  {
     color: "blue",
     selector: document.querySelector(".js-pad-blue"),
     sound: new Audio("../assets/simon-says-sound-3.mp3")
+  },*/
+  {
+    color: "green",
+    selector: document.querySelector(".js-pad-green"),
+    sound: new Audio("../assets/simon-says-sound-2.mp3")
   },
   {
     color: "yellow",
@@ -83,12 +83,13 @@ startButton.addEventListener("click", startButtonHandler);
  */
 function startButtonHandler() {
   // TODO: Write your code here.
-  setLevel(); //set the level of the game
+  onChange()
+ // setLevel(); //set the level of the game
   roundCount = roundCount + 1; // incements round count from 0 to 1
   startButton.classList.add("hidden"); // hides the start button now that button has been clicked
   statusSpan.classList.remove("hidden"); // reveals the status element so status messages show
   playComputerTurn(); // start the game with the computer going first
-  return { startButton, statusSpan };  //====== why is this needed ===== ??
+  //return { startButton, statusSpan };  //====== why is this needed ===== ??
 }
 
 /**
@@ -210,7 +211,7 @@ function activatePad(color) {
   pad.selector.classList.add("activated");
   pad.sound.play();
   setTimeout(() => 
-    pad.selector.classList.remove("activated"), 500);
+    pad.selector.classList.remove("activated"), 300);
 }
 
 /**
@@ -230,7 +231,7 @@ function activatePad(color) {
 function activatePads(sequence) {
   // TODO: Write your code here.
   sequence.forEach((element, i) => {
-    setTimeout(() => activatePad(element), 600*(i+1));
+    setTimeout(() => activatePad(element), 900*(i+1));
   });
 }
 
@@ -261,12 +262,11 @@ function playComputerTurn() {
   // TODO: Write your code here.
   padContainer.classList.add("unclickable");
   setText(statusSpan, "The computer's turn...");
-  let maxRoundCount = setLevel();
+  let maxRoundCount = onChange();
   setText(heading, `Round ${roundCount} of ${maxRoundCount}`);
   computerSequence.push(getRandomItem(pads).color);
   activatePads(computerSequence);
   setTimeout(() => playHumanTurn(roundCount), roundCount * 600 + 1000); // 5
-  //playHumanTurn();
 }
 
 /**
@@ -318,7 +318,6 @@ function checkPress(color) {
 
   if (computerSequence[index] !==  playerSequence[index]){
      resetGame("Try Again!");
-     //setText(statusSpan, "Incorrect!");
      return;
   }
 
@@ -346,11 +345,12 @@ function checkPress(color) {
 function checkRound() {
   // TODO: Write your code here.
   
-  let maxRoundCount = setLevel()
+  let maxRoundCount = onChange()
   console.log(`max round count = ${maxRoundCount}`)
   if(playerSequence.length === maxRoundCount){
+    
     resetGame("You WIN!!!");
-   // setText(statusSpan, "You WIN!");
+   
   } else {
     roundCount = roundCount + 1
     playerSequence = [];
@@ -371,13 +371,38 @@ function resetGame(text) {
   // TODO: Write your code here.
   computerSequence = [];
   playerSequence = [];
-  roundCount = [];
+  roundCount = 0;
   // Uncomment the code below:
   alert(text);
   setText(heading, "Simon Says");
+  
   startButton.classList.remove("hidden");
   statusSpan.classList.add("hidden");
   padContainer.classList.add("unclickable");
+  resetDropdown();
+}
+
+var e = document.getElementById("levelSelect");
+function onChange() {
+  var level = e.value;
+  var text = e.options[e.selectedIndex].text;
+  console.log(level, text);
+  if (level === "1") {
+    return 3;
+  } else if (level === "2") {
+    return 4;
+  } else if (level === "3") {
+    return 20;
+  } else if (level === "4"){
+    return 31;
+  } 
+}
+e.onchange = onChange;
+onChange();
+
+function resetDropdown() {
+  var dropDown = document.getElementById("levelSelect");
+  dropDown.selectedIndex = 0;
 }
 
 /**
