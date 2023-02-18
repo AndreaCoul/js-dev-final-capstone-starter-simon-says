@@ -162,6 +162,7 @@ h1 {
   cursor: pointer;
 }
 
+/*
 @media all and (min-width: 1000px){
   
   main {
@@ -223,5 +224,5 @@ h1 {
   .pad-blue {
     border-bottom-left-radius: 200px;
   }
-}
+} */
 
